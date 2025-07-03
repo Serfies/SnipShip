@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SnipShip</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header-container">
+            <h1>SnipShip</h1>
+            <button id="help-button" class="help-icon">?</button>
+        </div>
+
+        <div id="webhook-selection-area">
+            <h2>Select Webhook:</h2>
+            <div id="webhook-list-selection" class="scrollable-list"></div>
+            <button id="send-selected-text-button" class="full-width-button">Send Selected Text</button>
+            <div class="button-group">
+                <button id="add-webhook-button" class="action-button">Add Webhook</button>
+                <button id="edit-webhook-button" class="action-button">Edit Webhook</button>
+                <button id="delete-webhook-button" class="action-button">Delete Webhook</button>
+            </div>
+        </div>
+
+        <div id="response-area">
+            <div id="webhook-response"></div>
+        </div>
+    </div>
+    <script src="marked.min.js"></script>
+    <script src="popup.js"></script>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-help-modal">&times;</span>
+            <h2>SnipShip Help</h2>
+            <p>SnipShip isn't just a Chrome extension; it's your personal data shuttle for the web. Select any text on a webpage, and with a single click, launch it into your n8n workflows. But that's just the beginning. SnipShip empowers you to manage multiple webhook services, ensuring your chosen snippets always land exactly where they need to be.</p>
+            <p>Fuel your AI-driven automations by seamlessly feeding them context from the web. And the best part? SnipShip brings the intelligence back, delivering output from your workflows directly to your browser. Transform how you interact with web content and supercharge your productivity.</p>
+        </div>
+    </div>
+
+    <!-- Manage Webhooks Modal -->
+    <div id="manage-webhooks-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-manage-webhooks-modal">&times;</span>
+            <h2>Manage Webhooks</h2>
+            <form id="webhook-form">
+                <input type="hidden" id="webhook-id">
+                <label for="webhook-name">Name:</label>
+                <input type="text" id="webhook-name" required>
+                <label for="webhook-url">URL:</label>
+                <input type="url" id="webhook-url" required>
+                <label for="webhook-api-key">API Key (x-api-key header, optional):</label>
+                <input type="text" id="webhook-api-key">
+                <label for="webhook-input-field-name">Input Field Name (e.g., chatInput):</label>
+                <input type="text" id="webhook-input-field-name" value="chatInput">
+                <label for="webhook-output-field-name">Output Field Name (e.g., output):</label>
+                <input type="text" id="webhook-output-field-name" value="output">
+                <label for="webhook-description">Description:</label>
+                <textarea id="webhook-description"></textarea>
+                <button type="submit" id="save-webhook-button">Save Webhook</button>
+                <button type="button" id="cancel-edit-button" style="display:none;">Cancel Edit</button>
+            </form>
+            <ul id="webhook-list"></ul>
+        </div>
+    </div>
+</body>
+</html>
