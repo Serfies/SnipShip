@@ -5,27 +5,44 @@
     <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header-container">
-            <h1>SnipShip</h1>
-            <button id="help-button" class="help-icon">?</button>
-        </div>
-
-        <div id="webhook-selection-area">
-            <h2>Select Webhook:</h2>
-            <div id="webhook-list-selection" class="scrollable-list"></div>
-            <button id="send-selected-text-button" class="full-width-button">Send Selected Text</button>
-            <div class="button-group">
-                <button id="add-webhook-button" class="action-button">Add Webhook</button>
-                <button id="edit-webhook-button" class="action-button">Edit Webhook</button>
-                <button id="delete-webhook-button" class="action-button">Delete Webhook</button>
+    <div class="grid-container">
+        <header class="grid-header surface">
+            <div class="header-content">
+                <h1>SnipShip</h1>
+                <button id="help-button" class="help-icon">?</button>
             </div>
-        </div>
+        </header>
 
-        <div id="response-area">
-            <div id="webhook-response"></div>
-        </div>
-    </div>
+        <main class="grid-body">
+            <div id="webhook-selection-area" class="card">
+                <h2>Select Webhook:</h2>
+                <div id="webhook-list-selection" class="scrollable-list"></div>
+                <button id="send-selected-text-button" class="full-width-button">Send Selected Text</button>
+                <div class="button-group">
+                    <button id="add-webhook-button" class="action-button"><span class="button-icon">+</span>Add Webhook</button>
+                    <button id="edit-webhook-button" class="action-button"><span class="button-icon">&#9998;</span>Edit Webhook</button>
+                    <button id="delete-webhook-button" class="action-button"><span class="button-icon">&#128465;</span>Delete Webhook</button>
+                </div>
+            </div>
+
+            <div id="response-area" class="card">
+                <div class="response-header">
+                    <h2>Workflow Response:</h2>
+                    <button id="copy-response-button" class="action-button"><span class="button-icon">&#x2398;</span>Copy Response</button>
+                </div>
+                <div id="response-content"></div>
+                <div id="loading-spinner" class="spinner" style="display: none;"></div>
+                <div id="skeleton-loader" style="display: none;">
+                    <div class="skeleton-loader line"></div>
+                    <div class="skeleton-loader line"></div>
+                    <div class="skeleton-loader short"></div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="grid-footer surface">
+            <p>Access GitHub project at <a href="https://github.com/Serfies/SnipShip" target="_blank">https://github.com/Serfies/SnipShip</a></p>
+        </footer>
     <script src="marked.min.js"></script>
     <script src="popup.js"></script>
 

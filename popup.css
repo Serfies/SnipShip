@@ -1,46 +1,118 @@
+:root {
+    --elevation-1: 0 1px 4px rgba(0,0,0,0.1);
+    --elevation-2: 0 4px 8px rgba(0,0,0,0.2); /* Deeper shadow for dialogs */
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Segoe UI", Arial, sans-serif; /* Change font to Segoe UI */
+    font-size: 10px; /* Normal font size */
     width: 350px; /* Fixed width for the popup */
     height: 510px;
-    padding: 2px;
     background-color: #f4f4f4;
     color: #333;
-    position: relative; /* Added for absolute positioning of tooltip */
+    position: relative;
+    display: block; /* Use flexbox for the body to contain the grid */
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0; /* Remove body padding as grid container will handle it */
 }
 
-.container {
+.grid-container {
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* Header, scrollable body, footer */
+    height: 100%; /* Take full height of the body */
+    width: 100%; /* Take full width of the body */
+    gap: 8px; /* 8px gutter between grid rows */
+    padding: 4px; /* Consistent 8px padding for the whole popup */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+.grid-body {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 8px; /* 8px between groups (cards) */
+    overflow-y: auto; /* Enable scrolling for the main content area */
+    padding-right: 4px; /* Add some padding for scrollbar */
 }
 
-h1, h2 {
-    color: #0056b3;
-    margin-top: 0;
-    margin-bottom: 2px;
+.surface {
+    background-color: #fff;
+    border-radius: 4px; /* Softly rounded corners */
+    box-shadow: var(--elevation-1); /* Subtle shadow */
+    padding: 11px 8px; /* Reduced padding for header */
 }
 
-.header-container {
+.grid-header .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2px;
+}
+
+.grid-footer {
+    text-align: center;
+    font-size: 9px; /* Slightly smaller font for footer */
+    color: #666;
+    padding: 2px; /* Reduced padding for footer */
+}
+
+.grid-footer a {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+.grid-footer a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    font-size: 14px; /* SnipShip font size */
+    color: #0056b3;
+    margin-top: 0;
+    margin-bottom: 0px; /* 8px gutter below headings */
+}
+
+h2 {
+    color: #0056b3;
+    margin-top: 0;
+    margin-bottom: 0; /* Remove margin-bottom to align with button */
+    font-size: 12px; /* Maximum font size */
+    font-weight: normal; /* Make h2 not bold */
+}
+
+.response-header {
+    display: flex;
+    justify-content: space-between; /* Revert to space-between for overall layout */
+    align-items: center;
+    margin-bottom: 2px; /* 2px gutter below the header */
+}
+
+.response-header h2 {
+    margin-right: 8px; /* Add space between h2 and the button */
 }
 
 .help-icon {
     background-color: #007bff;
     color: white;
     border-radius: 50%;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1em;
+    font-size: 12px; /* Maximum font size */
     font-weight: bold;
     cursor: pointer;
     border: none;
     padding: 0;
+}
+
+#copy-response-button {
+    width: 120px; /* Set a fixed width for the button */
+    padding: 8px 4px; /* Restore standard button padding */
+    flex: none; /* Prevent button from stretching */
+    font-size: 10px; /* Normal font size */
+    background-color: #007bff; /* Blue for Edit */
 }
 
 .help-icon:hover {
@@ -63,24 +135,27 @@ h1, h2 {
 
 .modal-content {
     background-color: #fefefe;
-    margin: 5% auto; /* 5% from the top and centered */
-    padding: 20px;
+    margin: 5% auto;
+    padding: 8px; /* 24px padding inside modal content */
     border: 1px solid #888;
-    width: 80%; /* Could be more responsive */
+    width: 80%;
     border-radius: 8px;
     position: relative;
+    box-shadow: var(--elevation-2); /* Apply deeper shadow to modal content */
 }
 
 .modal-content h2 {
     color: #0056b3;
     margin-top: 0;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
+    font-size: 12px; /* Maximum font size */
 }
 
 .modal-content p {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     line-height: 1.5;
     color: #333;
+    font-size: 10px; /* Normal font size */
 }
 
 .close-button {
@@ -102,31 +177,37 @@ h1, h2 {
 
 label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+    color: #0056b3;
+    margin-bottom: 4px;
+    font-weight: normal;
+    font-size: 10px; /* Normal font size */
 }
 
 input[type="text"],
 input[type="url"],
 textarea,
 select {
-    width: calc(100% - 10px);
+    width: calc(100% - 16px); /* Adjust for 8px padding on each side */
     padding: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 8px; /* 8px gutter below inputs */
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 10px; /* Normal font size */
 }
 
 button {
     background-color: #007bff;
     color: white;
-    padding: 10px 15px;
+    padding: 8px 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 1em;
-    margin-right: 5px;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    font-size: 10px; /* Normal font size */
+    margin-right: 0; /* Remove default button margin */
+    box-sizing: border-box;
+    display: flex; /* Enable flexbox for icon and text alignment */
+    align-items: center; /* Vertically align icon and text */
+    justify-content: center; /* Center content horizontally */
 }
 
 button:hover {
@@ -138,10 +219,18 @@ button:disabled {
     cursor: not-allowed;
 }
 
-#webhook-selection-area {
+.card {
+    background-color: #fff;
+    border-radius: 8px; /* Softly rounded corners */
+    box-shadow: var(--elevation-1); /* Subtle shadow */
+    padding: 8px; /* 24px padding inside cards */
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 8px; /* 8px gutters between elements within a card */
+}
+
+#webhook-selection-area {
+    /* This will now be a card */
 }
 
 #webhook-list-selection {
@@ -149,8 +238,8 @@ button:disabled {
     border-radius: 4px;
     max-height: 150px; /* Fixed height for scrollability */
     overflow-y: auto;
-    background-color: #fff;
-    padding: 5px;
+    background-color: #fff; /* Background already white due to card, but keep for clarity */
+    padding: 8px; /* Adjust padding to 8px */
 }
 
 .webhook-item {
@@ -174,11 +263,12 @@ button:disabled {
 
 .webhook-item strong {
     display: block;
-    margin-bottom: 3px;
+    margin-bottom: 0;
+    font-size: 12px; /* Maximum font size for webhook name */
 }
 
 .webhook-item p {
-    font-size: 0.9em;
+    font-size: 10px; /* Normal font size for description */
     color: #666;
     margin: 0;
 }
@@ -191,14 +281,14 @@ button:disabled {
 .button-group {
     display: flex;
     justify-content: space-between;
-    gap: 5px; /* Space between buttons */
-    margin-top: 10px;
+    gap: 8px; /* Space between buttons, 8px gutter */
+    margin-top: 0px; /* have groups flush together */
 }
 
 .action-button {
     flex: 1; /* Distribute space equally */
-    padding: 8px 10px;
-    font-size: 0.9em;
+    padding: 8px 4px;
+    font-size: 10px; /* Normal font size */
     background-color: #6c757d; /* Default color for action buttons */
 }
 
@@ -219,53 +309,114 @@ button:disabled {
 }
 
 #response-area {
-    background-color: #e9ecef;
-    border: 1px solid #ced4da;
-    padding: 10px;
+    /* This will now be a card */
+    background-color: #fff; /* Match card background */
+    border: none; /* Remove border to match card */
+    border-radius: 8px; /* Match card border-radius */
+    box-shadow: var(--elevation-1); /* Match card shadow */
+    padding: 8px; /* Adjust padding to 8px to match card */
+    display: flex; /* Match card display */
+    flex-direction: column; /* Match card flex-direction */
+    gap: 8px; /* Match card gap */
+    min-height: 150px; /* Adjusted min-height */
+    max-height: 250px; /* Fixed max-height for scrollability */
+    overflow-y: auto; /* Allow internal scrolling */
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    flex: 1 1 auto;      /* ← grow to fill leftover space */
+    overflow-y: auto;    /* keep scrolling if it overruns */
+    margin-bottom: 0;    /* no extra gap below */
+}
+
+#response-content {
+    border: 1px solid #ddd; /* Similar border to webhook list selection */
+    border-radius: 4px; /* Similar border-radius to webhook list selection */
+    padding: 8px; /* Consistent padding */
+    background-color: #fefefe; /* White background for content area */
+    min-height: 100px; /* Ensure it has some height */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+    flex: 1 1 auto;      /* ← grow to fill leftover space */
+}
+
+/* Skeleton/Spinner styles */
+.skeleton-loader {
+    background-color: #f0f0f0;
     border-radius: 4px;
-    min-height: 300px;
-    max-height: 600px; /* Increased max-height */
-    overflow: auto; /* Changed to auto for both scrollbars */
-    resize: vertical; /* Allow vertical resizing */
-    white-space: pre-wrap; /* Preserve whitespace and wrap text */
-    word-wrap: break-word; /* Break long words */
+    margin-bottom: 8px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-loader.line {
+    height: 1em;
+    width: 100%;
+}
+
+.skeleton-loader.short {
+    height: 1em;
+    width: 70%;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
 }
 
 hr {
     border: 0;
     height: 1px;
     background: #ccc;
-    margin: 20px 0;
+    margin: 16px 0;
 }
 
 #webhook-list {
     list-style: none;
     padding: 0;
-    margin-top: 20px; /* Add some space above the list */
+    margin-top: 16px; /* 16px between groups */
+}
+
+/* Spinner styles */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #007bff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    margin: 16px auto; /* Center the spinner */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 #webhook-list li {
     background-color: #fff;
     border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 8px;
+    padding: 16px; /* Adjust padding to 16px */
+    margin-bottom: 8px; /* 8px gutter between list items */
     border-radius: 4px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px; /* 8px gutter between elements within list item */
 }
 
 #webhook-list li .webhook-actions {
     display: flex;
-    gap: 5px;
-    margin-top: 5px;
+    gap: 8px;
+    margin-top: 8px;
 }
 
 #webhook-list li button {
-    padding: 5px 10px;
-    font-size: 0.9em;
+    padding: 8px 8px;
+    font-size: 10px; /* Normal font size */
     background-color: #6c757d;
     flex: 1; /* Make buttons take equal width */
+}
+
+.button-icon {
+    margin-right: 8px; /* Space between icon and text */
 }
 
 #webhook-list li button.edit-webhook {

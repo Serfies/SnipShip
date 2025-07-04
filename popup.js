@@ -1,7 +1,10 @@
 /*  */document.addEventListener('DOMContentLoaded', () => {
     const webhookListSelectionDiv = document.getElementById('webhook-list-selection');
     const sendSelectedTextButton = document.getElementById('send-selected-text-button');
-    const webhookResponseDiv = document.getElementById('webhook-response');
+    const responseContentDiv = document.getElementById('response-content');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const skeletonLoader = document.getElementById('skeleton-loader');
+    const copyResponseButton = document.getElementById('copy-response-button');
     const webhookForm = document.getElementById('webhook-form');
     const webhookIdInput = document.getElementById('webhook-id');
     const webhookNameInput = document.getElementById('webhook-name');
@@ -140,37 +143,53 @@
     // Handle edit webhook button click
     editWebhookButton.addEventListener('click', () => {
         if (!selectedWebhookId) {
-            webhookResponseDiv.textContent = 'Please select a webhook to edit.';
+            responseContentDiv.textContent = 'Please select a webhook to edit.';
             return;
         }
         const webhookToEdit = webhooks.find(w => w.id === selectedWebhookId);
         if (webhookToEdit) {
             openWebhookFormModal(webhookToEdit);
         } else {
-            webhookResponseDiv.textContent = 'Selected webhook not found for editing.';
+            responseContentDiv.textContent = 'Selected webhook not found for editing.';
         }
     });
  
     // Handle delete webhook button click
     deleteWebhookButton.addEventListener('click', async () => {
         if (!selectedWebhookId) {
-            webhookResponseDiv.textContent = 'Please select a webhook to delete.';
+            responseContentDiv.textContent = 'Please select a webhook to delete.';
             return;
         }
         if (confirm('Are you sure you want to delete the selected webhook?')) {
             webhooks = webhooks.filter(w => w.id !== selectedWebhookId);
             selectedWebhookId = null; // Deselect after deletion
             await saveWebhooks();
-            webhookResponseDiv.textContent = 'Webhook deleted successfully.';
+            responseContentDiv.textContent = 'Webhook deleted successfully.';
         }
     });
+
+    // Function to show loading state (spinner and skeleton)
+    function showLoadingState() {
+        responseContentDiv.style.display = 'none';
+        loadingSpinner.style.display = 'block';
+        skeletonLoader.style.display = 'block';
+    }
+
+    // Function to hide loading state
+    function hideLoadingState() {
+        loadingSpinner.style.display = 'none';
+        skeletonLoader.style.display = 'none';
+        responseContentDiv.style.display = 'block';
+    }
 
     // Function to send data to webhook
     async function sendDataToWebhook(payload, type) {
         if (!selectedWebhookId) {
-            webhookResponseDiv.textContent = 'Please select a webhook from the list above.';
+            responseContentDiv.textContent = 'Please select a webhook from the list above.';
             return;
         }
+
+        showLoadingState(); // Show loading state before sending request
 
         const selectedWebhook = webhooks.find(w => w.id === selectedWebhookId);
         if (!selectedWebhook) {
@@ -178,7 +197,7 @@
             return;
         }
 
-        webhookResponseDiv.textContent = `Sending ${type}...`;
+        responseContentDiv.textContent = `Sending ${type}...`; // Update this to responseContentDiv
 
         try {
             const headers = {
@@ -201,14 +220,16 @@
             const data = await response.json();
             const outputFieldName = selectedWebhook.outputFieldName || 'output';
             if (data && data[outputFieldName]) {
-                webhookResponseDiv.innerHTML = marked.parse(data[outputFieldName]);
+                responseContentDiv.innerHTML = marked.parse(data[outputFieldName]); // Update this to responseContentDiv
             } else {
-                webhookResponseDiv.textContent = `No "${outputFieldName}" field found in webhook response.`;
+                responseContentDiv.textContent = `No "${outputFieldName}" field found in webhook response.`; // Update this to responseContentDiv
                 console.log('Full webhook response:', data);
             }
         } catch (error) {
-            webhookResponseDiv.textContent = `Error: ${error.message}`;
+            responseContentDiv.textContent = `Error: ${error.message}`; // Update this to responseContentDiv
             console.error(`Error sending ${type} to webhook:`, error);
+        } finally {
+            hideLoadingState(); // Hide loading state after response or error
         }
     }
 
@@ -248,7 +269,7 @@
         try {
             const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
             if (!tab.id) {
-                webhookResponseDiv.textContent = 'Cannot get selected text from this tab.';
+                responseContentDiv.textContent = 'Cannot get selected text from this tab.'; // Update this to responseContentDiv
                 return;
             }
  
@@ -260,7 +281,7 @@
  
             const selectedWebhook = webhooks.find(w => w.id === selectedWebhookId);
             if (!selectedWebhook) {
-                webhookResponseDiv.textContent = 'Selected webhook not found.';
+                responseContentDiv.textContent = 'Selected webhook not found.'; // Update this to responseContentDiv
                 return;
             }
  
@@ -272,10 +293,10 @@
                 payload[inputFieldName] = selectedText;
                 await sendDataToWebhook(payload, 'selected text');
             } else {
-                webhookResponseDiv.textContent = 'No text selected on the page.';
+                responseContentDiv.textContent = 'No text selected on the page.'; // Update this to responseContentDiv
             }
         } catch (error) {
-            webhookResponseDiv.textContent = `Error getting selected text: ${error.message}`;
+            responseContentDiv.textContent = `Error getting selected text: ${error.message}`; // Update this to responseContentDiv
             console.error('Error getting selected text:', error);
         }
     });
@@ -283,6 +304,26 @@
     // Handle help button click to open modal
     helpButton.addEventListener('click', () => {
         helpModal.style.display = 'block';
+    });
+
+    // Handle copy response button click
+    copyResponseButton.addEventListener('click', async () => {
+        try {
+            const textToCopy = responseContentDiv.textContent;
+            await navigator.clipboard.writeText(textToCopy);
+            // Optionally, provide visual feedback to the user
+            copyResponseButton.textContent = 'Copied!';
+            setTimeout(() => {
+                copyResponseButton.innerHTML = '&#x2398;'; // Reset icon
+            }, 1500);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+            // Optionally, inform the user about the failure
+            copyResponseButton.textContent = 'Failed!';
+            setTimeout(() => {
+                copyResponseButton.innerHTML = '&#x2398;'; // Reset icon
+            }, 1500);
+        }
     });
  
     // Handle close help modal button click
