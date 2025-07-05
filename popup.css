@@ -45,8 +45,8 @@ body {
 
 .grid-header .header-content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-items: center; /* Align items vertically in the center */
+    gap: 8px; /* Add a gap between the icon, title, and button */
 }
 
 .grid-footer {
@@ -57,7 +57,7 @@ body {
 }
 
 .grid-footer a {
-    color: #0056b3;
+    color: #183c7a;
     text-decoration: none;
 }
 
@@ -66,14 +66,14 @@ body {
 }
 
 h1 {
-    font-size: 14px; /* SnipShip font size */
-    color: #0056b3;
-    margin-top: 0;
-    margin-bottom: 0px; /* 8px gutter below headings */
+    font-size: 14px; /* AraAo font size */
+    color: #183c7a;
+    margin: 0; /* Remove default margins */
+    flex-grow: 1; /* Allow the title to take up available space */
 }
 
 h2 {
-    color: #0056b3;
+    color: #183c7a;
     margin-top: 0;
     margin-bottom: 0; /* Remove margin-bottom to align with button */
     font-size: 12px; /* Maximum font size */
@@ -92,7 +92,7 @@ h2 {
 }
 
 .help-icon {
-    background-color: #007bff;
+    background-color: #183c7a;
     color: white;
     border-radius: 50%;
     width: 20px;
@@ -105,6 +105,7 @@ h2 {
     cursor: pointer;
     border: none;
     padding: 0;
+    flex-shrink: 0; /* Prevent the help icon from shrinking */
 }
 
 #copy-response-button {
@@ -112,11 +113,18 @@ h2 {
     padding: 8px 4px; /* Restore standard button padding */
     flex: none; /* Prevent button from stretching */
     font-size: 10px; /* Normal font size */
-    background-color: #007bff; /* Blue for Edit */
+    background-color: #183c7a; /* Blue for Edit */
 }
 
 .help-icon:hover {
-    background-color: #0056b3;
+    background-color: #183c7a;
+}
+
+.header-icon {
+    width: 24px; /* Set icon width */
+    height: 24px; /* Set icon height */
+    margin-right: 4px; /* Space between icon and title */
+    flex-shrink: 0; /* Prevent the icon from shrinking */
 }
 
 /* Modal Styles */
@@ -145,7 +153,7 @@ h2 {
 }
 
 .modal-content h2 {
-    color: #0056b3;
+    color: #183c7a;
     margin-top: 0;
     margin-bottom: 16px;
     font-size: 12px; /* Maximum font size */
@@ -177,7 +185,7 @@ h2 {
 
 label {
     display: block;
-    color: #0056b3;
+    color: #183c7a;
     margin-bottom: 4px;
     font-weight: normal;
     font-size: 10px; /* Normal font size */
@@ -196,7 +204,7 @@ select {
 }
 
 button {
-    background-color: #007bff;
+    background-color: #183c7a;
     color: white;
     padding: 8px 16px;
     border: none;
@@ -211,7 +219,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #183c7a;
 }
 
 button:disabled {
@@ -258,7 +266,7 @@ button:disabled {
 
 .webhook-item.selected {
     background-color: #e0f7fa;
-    border: 1px solid #007bff;
+    border: 1px solid #183c7a;
 }
 
 .webhook-item strong {
@@ -301,7 +309,7 @@ button:disabled {
 }
 
 #edit-webhook-button {
-    background-color: #007bff; /* Blue for Edit */
+    background-color: #183c7a; /* Blue for Edit */
 }
 
 #delete-webhook-button {
@@ -378,7 +386,7 @@ hr {
 /* Spinner styles */
 .spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);
-    border-left-color: #007bff;
+    border-left-color: #183c7a;
     border-radius: 50%;
     width: 24px;
     height: 24px;

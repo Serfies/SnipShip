@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "SnipShip",
+  "name": "AraAo",
   "version": "1.0",
-  "description": "Send selected text to n8n or other webhooks and display the response.",
+  "description": "Araao: Your path (Ara) to the cloud (Ao). Connect any webpage to Gemini, ChatGPT, and your own agentic workflows via webhooks.",
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
